@@ -1,0 +1,141 @@
+<style>
+    @media screen and (max-width:768px) {
+        .flider-container {
+            margin-top: 3%;
+            display: flex;
+            position: relative;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .engine-logo-png {
+            border-radius: 50%;
+            height: 100px;
+            width: 80px;
+            background-color: #151e2d;
+        }
+
+        .flide {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+    }
+</style>
+
+<body>
+
+    <div class="flider-container">
+        <button class="butt" id="prevBtn">&#10094;</button>
+        <div class="flider">
+            <div class="flide">
+                <div class="statue">
+                    <img src="\photos\ganesh.jpg" class="engine-logo-png" alt="Image1">
+                </div>
+                <div class="statue">
+                    <img src="\photos\buddh.jpg" class="engine-logo-png" alt="Image2">
+                </div>
+                <div class="statue">
+                    <img src="\photos\shiv.jpg" class="engine-logo-png" alt="Image3">
+                </div>
+            </div>
+            <div class="flide">
+                <div class="statue">
+                    <img src="\photos\shankar.jpg" class="engine-logo-png" alt="Image4">
+                </div>
+                <div class="statue">
+                    <img src="\photos\hanuman.jpg" class="engine-logo-png" alt="Image5">
+                </div>
+                <div class="statue">
+                    <img src="\photos\parvati.jpg" class="engine-logo-png" alt="Image6">
+                </div>
+            </div>
+            <div class="flide">
+                <div class="statue">
+                    <img src="\photos\radha.jpg" class="engine-logo-png" alt="Image7">
+                </div>
+                <div class="statue">
+                    <img src="\photos\sai.jpg" class="engine-logo-png" alt="Image8">
+                </div>
+                <div class="statue">
+                    <img src="\photos\durga.jpg" class="engine-logo-png" alt="Image9">
+                </div>
+            </div>
+        </div>
+        <button class="butt" id="nextBtn">&#10095;</button>
+    </div>
+    <div class="flider-indicators">
+        <button class="indicator active" data-flide-index="0"></button>
+        <button class="indicator" data-flide-index="1"></button>
+        <button class="indicator" data-flide-index="2"></button>
+    </div>
+
+
+    <script>
+        // JavaScript for the image flider
+        let currentflide = 0;
+        const flides = document.querySelectorAll('.flide');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const indicators = document.querySelectorAll('.indicator');
+
+        function showflide(index) {
+            flides.forEach((flide, i) => {
+                if (i === index) {
+                    flide.style.display = 'flex';
+                } else {
+                    flide.style.display = 'none';
+                }
+            });
+        }
+
+        function goToflide(index) {
+            currentflide = index;
+            showflide(currentflide);
+            updateIndicators();
+        }
+
+        function updateIndicators() {
+            indicators.forEach((indicator, i) => {
+                if (i === currentflide) {
+                    indicator.classList.add('active');
+                } else {
+                    indicator.classList.remove('active');
+                }
+            });
+        }
+
+        nextBtn.addEventListener('click', () => {
+            currentflide++;
+            if (currentflide >= flides.length) {
+                currentflide = 0;
+            }
+            showflide(currentflide);
+            updateIndicators();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            currentflide--;
+            if (currentflide < 0) {
+                currentflide = flides.length - 1;
+            }
+            showflide(currentflide);
+            updateIndicators();
+        });
+
+        indicators.forEach((indicator, i) => {
+            indicator.addEventListener('click', () => {
+                goToflide(i);
+            });
+        });
+
+        // Show the first flide initially
+        showflide(currentflide);
+        updateIndicators();
+
+    </script>
+</body>
+</html>

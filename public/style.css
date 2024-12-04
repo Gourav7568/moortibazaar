@@ -1,0 +1,394 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family:'Poppins', sans-serif; 
+}
+
+body { 
+    overflow-x: hidden;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    background-color: black;
+}
+
+.navbar {
+    background-color: rgba(255, 255, 255, 0.8); /* Initially, a slightly transparent white */
+    transition: background-color 0.3s ease; /* Smooth transition effect */
+  }
+
+  .navbar.sticky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: transparent; /* Transparent background on scroll down */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Add a subtle shadow on scroll down */
+    z-index: 1000; /* Ensure it's above other elements */
+  }
+
+ 
+.nav-item{
+    font-weight: bold;
+    margin: 1rem;
+    font-size: 18px;
+}
+/* Base styles for the navigation links */
+.nav-item a {
+    text-decoration: none;
+    position: relative;
+    color: #333;
+    transition: color 0.3s;
+}
+
+/* Create the underline pseudo-element */
+.nav-item a::before {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #e4b92d;
+    transition: width 0.3s;
+}
+
+/* Expand the underline on hover */
+.nav-item a:hover::before {
+    width: 100%;
+}
+
+/* Style for the submenu */
+.submenu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Show the submenu on hover of the parent list item */
+.nav-item:hover .submenu {
+    display: block;
+}
+
+/* Style for submenu items */
+.submenu li {
+    padding: 10px 20px;
+}
+
+.submenu li a {
+    text-decoration: none;
+    color: #333;
+    transition: color 0.3s;
+}
+
+/* Change text color on hover for submenu items */
+.submenu li a:hover {
+    color: #f00;
+}
+.enq{
+    position: relative;
+}
+
+
+.carousel-image{
+    height: 50vw;
+}
+.card img:hover{
+    cursor: pointer;
+}
+/* .card img:hover{
+    transform: translateY(-2%);
+    box-shadow: 0 4rem 8rem rgba(0, 0, 0, 0.5);
+} */
+.card-title{
+    font-weight: bold;
+}
+.enquiry{
+    display:block;
+    height: 50%;
+    text-align: center;
+    align-items: center;
+    
+}
+.model {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.9);
+}
+
+/* Style for the modal image */
+.model-content {
+    margin: auto;
+    padding-top: 90px;
+    display: block;
+    max-width: 40%;
+    max-height: 60%;
+}
+
+/* Style for the close button */
+.close {
+    position: absolute;
+    top: 10%;
+    left: 32%;
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #ccc;
+}
+.low{
+    display: flex;
+    
+}
+.top{
+    text-align: center;
+    font-style: oblique;
+    color: rgb(218, 149, 65);
+    
+}
+
+@media screen and (max-width:768px) {
+    html,body{
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        /* overflow-x: hidden; */
+    }
+   .carousel-image{
+    margin-top: 5%;
+   }
+    .model-content {
+        margin:auto;
+        display: block;
+        max-width: 80%;
+        max-height: 80%;
+        margin-top: 5%;
+    }
+    .navbar-nav .dropdown-menu {
+        position: absolute;
+    }
+    .head{
+        margin-top: 12%;
+    }
+    .site-logo{
+        height: 60px;
+        width: 80px;
+    }
+    .statue{
+        margin: 5px;
+    }
+    .close{
+        position:absolute;
+        top:10%;
+        left:10% ;
+    }
+    .low{
+        display: flex;
+        justify-content: center;
+       
+    }
+    
+    
+}
+
+.about-us-section{
+    margin-top:5rem ;
+}
+
+.testimonial-slider { 
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.testimonial {
+    display: none;
+    margin-bottom: 20px;
+}
+
+.quote {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.author {
+    font-weight: bold;
+}
+.controls {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.control {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #333;
+    margin: 0 5px 5px;
+    cursor: pointer;
+}
+.main{
+    margin: auto;
+}
+.toper {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    width: 80%;
+    max-width: 80%;
+    margin: auto;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="phone"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.form-group input[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+.fab{
+    padding-left: 20px;
+}
+.uplogo{
+    display: flex;
+}
+.logo{
+    color: black;
+    background-color: #fff;
+    border-radius: 50%;
+    text-align: center;
+    margin: 5px;
+}
+.logo:hover{
+    background-color:darksalmon;
+}
+  /* CSS for the image flider */
+  .flider-container {
+    display: flex;
+    margin-top: 20px;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.flider {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.flide {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+}
+
+.flide img {
+    object-fit: fill;
+}
+
+/* You can customize the flider appearance here */
+
+.flider-indicators {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.flider-indicators .active {
+    background-color: rgb(141, 60, 88);
+}
+
+.indicator {
+    width: 10px;
+    height: 10px;
+    border: none;
+    border-radius: 50%;
+    background-color: gray;
+    cursor: pointer;
+}
+
+.engine-logo-png {
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
+    margin: 10px;
+    background-color: #151e2d;
+}
+
+.statue {
+    transform: translateY(-2%);
+    box-shadow: 0 0.5rem 1rem rgba(240, 244, 10, 0.89);
+    border-radius: 50%;
+}
+
+.butt {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    color: aliceblue;
+}
+.whatsapp_content{
+    position: fixed;
+    bottom:40px;
+    right: 20px; 
+}
+.whatimg{
+    width:30px;
+    height:30px;
+    border-radius: 50%;
+}
+.cart{
+   float: right;
+   font-weight: bold;
+}
+.cart_icon{
+    margin-right: 30px;
+}
+
+
+
+
+
