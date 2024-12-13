@@ -19,6 +19,12 @@ const staticpath = path.join(__dirname, '../public');
 app.use('/photos', express.static('photos'));
 app.use(express.static(staticpath));
 app.use(express.urlencoded({ extended: true }));
+app.use((req, res) => {
+  res.status(404).render('404', {
+    title: '404',
+    message: 'Page Not Found'
+  });
+}); 
 
 hbs.registerPartials(pathreg)
 
