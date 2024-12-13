@@ -20,10 +20,7 @@ app.use('/photos', express.static('photos'));
 app.use(express.static(staticpath));
 app.use(express.urlencoded({ extended: true }));
 app.use((req, res) => {
-  res.status(404).render('404', {
-    title: '404',
-    message: 'Page Not Found'
-  });
+  res.status(404).render('404')
 }); 
 
 hbs.registerPartials(pathreg)
