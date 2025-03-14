@@ -1,31 +1,35 @@
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const { Schema } = mongoose;
+const mongoose = require("mongoose");
 require("dotenv").config();
-const mongoUrl = 'mongodb+srv://gouravkumarsharmacse25:DPMJOJr7KYjkzYit@cluster0.aqbpr.mongodb.net/myDatabase?retryWrites=true&w=majority';
-mongoose.connect(mongoUrl, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
-    .then(() => console.log('databse connected..'))
-    .catch((error) => console.log(error));
 
+const MONGO_URI = process.env.MONGO_URI;
 
-const customerSchema = new Schema({
-    name: {
-        type: String,
-        require: true
-    },
-    email: {
-        type: String,
-        require: true
-    },
-    phone: {
-        type: Number,
-        require:true
-    }
-})
+if (!MONGO_URI) {
+  throw new Error("MONGO_URI is not defined in environment variables");
+}
 
-const Customer = mongoose.model('Customer', customerSchema);
-module.exports = Customer;
+let cached = global.mongoose || { conn: null, promise: null };
 
+async function connectDB() {
+  if (cached.conn) {
+    console.log("Using existing MongoDB connection");
+    return cached.conn;
+  }
+
+  if (!cached.promise) {
+    cached.promise = mongoose
+      .connect(MONGO_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      })
+      .then((mongoose) => {
+        console.log("Connected to MongoDB");
+        return mongoose;
+      });
+  }
+
+  cached.conn = await cached.promise;
+  return cached.conn;
+}
+
+global.mongoose = cached;
+module.exports = connectDB;
