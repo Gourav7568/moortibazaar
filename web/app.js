@@ -8,8 +8,15 @@ const PORT = process.env.PORT || 8080;
 const connectDB = require("../server/db"); 
 const Customer = require("../server/customerModel"); 
 
-// Connect to MongoDB before handling requests
-connectDB();
+(async () => {
+  try {
+    await connectDB(); // Ensure DB is connected before handling requests
+    console.log("✅ MongoDB connected before handling requests.");
+  } catch (error) {
+    console.error("❌ Database connection failed:", error);
+    process.exit(1);
+  }
+})();
 
 // Set up Handlebars
 app.set("views", path.join(__dirname, "../templets/views"));
@@ -21,6 +28,14 @@ hbs.registerPartials(path.join(__dirname, "../templets/partials"));
 // Static Files
 app.use(express.static(path.join(__dirname, "../public")));
 app.use(express.urlencoded({ extended: true }));
+
+// Middleware to prevent long requests (timeout after 9s)
+app.use((req, res, next) => {
+  res.setTimeout(9000, () => {
+    res.status(503).json({ error: "Server timeout. Try again later." });
+  });
+  next();
+});
 
 // Routes
 app.get("/", (req, res) => {
@@ -40,16 +55,21 @@ app.post("/detail", async (req, res) => {
     }
 
     const newCustomer = new Customer({ name, email, phone });
-    await newCustomer.save();
+    
+    // Set a timeout to prevent 504 errors
+    const savePromise = newCustomer.save();
+    const timeoutPromise = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error("Database save timeout")), 9000)
+    );
+
+    await Promise.race([savePromise, timeoutPromise]);
 
     const successMessage =
       '<script>alert("Thank you for your response"); window.history.back();</script>';
     res.status(200).send(successMessage);
   } catch (error) {
-    console.error("Error saving customer:", error);
-    const errorMessage =
-      '<script>alert("An error occurred while saving the customer"); window.history.back();</script>';
-    res.status(500).send(errorMessage);
+    console.error("❌ Error saving customer:", error);
+    res.status(500).json({ error: "Database error or timeout. Try again later." });
   }
 });
 
@@ -60,5 +80,5 @@ app.get("*", (req, res) => {
 
 // Start the server
 app.listen(PORT, () => {
-  console.log(`Server is listening on port ${PORT}`);
+  console.log(`🚀 Server is listening on port ${PORT}`);
 });
